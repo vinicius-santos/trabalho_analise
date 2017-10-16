@@ -32,7 +32,6 @@
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.solicitanteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipoDeAnáliseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -59,10 +58,9 @@
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clienteToolStripMenuItem,
-            this.solicitanteToolStripMenuItem,
             this.tipoDeAnáliseToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem1.Text = "Cadastro";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -72,12 +70,6 @@
             this.clienteToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.clienteToolStripMenuItem.Text = "Cliente";
             this.clienteToolStripMenuItem.Click += new System.EventHandler(this.clienteToolStripMenuItem_Click);
-            // 
-            // solicitanteToolStripMenuItem
-            // 
-            this.solicitanteToolStripMenuItem.Name = "solicitanteToolStripMenuItem";
-            this.solicitanteToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.solicitanteToolStripMenuItem.Text = "Solicitante";
             // 
             // tipoDeAnáliseToolStripMenuItem
             // 
@@ -108,7 +100,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem solicitanteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tipoDeAnáliseToolStripMenuItem;
     }
 }

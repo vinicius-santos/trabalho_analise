@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.com.vinicius.projeto.ana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.com.vinicius.projeto.analise.Forms", "br.com.vinicius.projeto.analise.Forms\br.com.vinicius.projeto.analise.Forms.csproj", "{7524AB82-E84D-4067-9D12-731188884D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "br.com.vinicius.projeto.DB", "br.com.vinicius.projeto.DB\br.com.vinicius.projeto.DB.csproj", "{01B5D6D5-FF53-4CA9-8F78-08941E624F95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{7524AB82-E84D-4067-9D12-731188884D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7524AB82-E84D-4067-9D12-731188884D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7524AB82-E84D-4067-9D12-731188884D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B5D6D5-FF53-4CA9-8F78-08941E624F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B5D6D5-FF53-4CA9-8F78-08941E624F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B5D6D5-FF53-4CA9-8F78-08941E624F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B5D6D5-FF53-4CA9-8F78-08941E624F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +43,6 @@ Global
 		{9EE7F945-D588-4845-8F47-C0CE4A617B1C} = {BBB8D725-F6AF-44D9-A8A4-88730BB234F0}
 		{AC351BB9-40EC-48FB-90E7-1642A4DD3FD5} = {8F554EFA-3DE9-4BAB-B7D1-53FA81AC03D7}
 		{7524AB82-E84D-4067-9D12-731188884D7E} = {7F502F6A-9D22-41EA-800F-11BA7C539947}
+		{01B5D6D5-FF53-4CA9-8F78-08941E624F95} = {9EE7F945-D588-4845-8F47-C0CE4A617B1C}
 	EndGlobalSection
 EndGlobal
