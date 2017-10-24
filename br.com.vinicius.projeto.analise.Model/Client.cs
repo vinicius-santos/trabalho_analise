@@ -79,5 +79,18 @@ namespace br.com.vinicius.projeto.analise.Model
                 city = value;
             }
         }
+
+        public string State
+        {
+            get
+            {
+                return state;
+            }
+
+            set
+            {
+                state = value;
+            }
+        }
     }
 }
