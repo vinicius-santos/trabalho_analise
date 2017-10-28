@@ -2,21 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace br.com.vinicius.projeto.analise.Model
 {
     public class ClientRegister : RegisterBase
     {
         string provider =
-        "Oracle.DataAccess.Client.OracleConnection, Oracle.DataAccess";
-
-        string connectionString =
-        "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)" +
-        "(HOST=MYHOST)(PORT=1527))(CONNECT_DATA=(SID=MYSERVICE)));" +
-        "User Id=MYUSER;Password=MYPASS;";
+        //"Oracle.DataAccess.Client.OracleConnection, Oracle.DataAccess";
+        "System.Data.SqlClient";
+        string connectionString = "Data Source=VINICIUS-PC/SQLEXPRESS;Initial Catalog=Analise;Integrated Security=True;Integrated Security=SSPI";
+        //"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)" +
+        //"(HOST=MYHOST)(PORT=1527))(CONNECT_DATA=(SID=MYSERVICE)));" +
+        //"User Id=MYUSER;Password=MYPASS;";
 
         public override void Select()
         {
@@ -43,8 +45,10 @@ namespace br.com.vinicius.projeto.analise.Model
 
         public override string Insert(Object obj)
         {
+            var factory = DbProviderFactories.GetFactory("System.Data.SqlClient");
+            var type = Type.GetType("SqlProvider");
             Client client = (Client)obj;
-            using (DbConnection conn = (DbConnection)Activator.CreateInstance(Type.GetType(provider), connectionString))
+            using (SqlConnection conn = new SqlConnection(@"data source=VINICIUS-PC\SQLEXPRESS;Initial Catalog=Analise; Integrated Security = SSPI;"))
             {
                 conn.Open();
                 using (var tran = conn.BeginTransaction())

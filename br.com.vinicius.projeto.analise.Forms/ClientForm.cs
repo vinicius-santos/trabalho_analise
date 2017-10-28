@@ -30,6 +30,11 @@ namespace br.com.vinicius.projeto.analise.Forms
             KeyPressBase(sender, e);
         }
 
-
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            var register = new ClientRegister();
+            var client = new Client();
+            register.Insert(client);
+        }
     }
 }

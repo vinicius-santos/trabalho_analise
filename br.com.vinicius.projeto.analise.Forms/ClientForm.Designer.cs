@@ -38,6 +38,7 @@
             this.txtCidade = new System.Windows.Forms.TextBox();
             this.lblEstado = new System.Windows.Forms.Label();
             this.cbEstado = new System.Windows.Forms.ComboBox();
+            this.btnRegistrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblNome
@@ -122,11 +123,22 @@
             this.cbEstado.Size = new System.Drawing.Size(121, 21);
             this.cbEstado.TabIndex = 9;
             // 
+            // btnRegistrar
+            // 
+            this.btnRegistrar.Location = new System.Drawing.Point(550, 131);
+            this.btnRegistrar.Name = "btnRegistrar";
+            this.btnRegistrar.Size = new System.Drawing.Size(121, 23);
+            this.btnRegistrar.TabIndex = 10;
+            this.btnRegistrar.Text = "Registrar";
+            this.btnRegistrar.UseVisualStyleBackColor = true;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 491);
+            this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.cbEstado);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.txtCidade);
@@ -159,5 +171,6 @@
         private System.Windows.Forms.TextBox txtCidade;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.ComboBox cbEstado;
+        private System.Windows.Forms.Button btnRegistrar;
     }
 }
