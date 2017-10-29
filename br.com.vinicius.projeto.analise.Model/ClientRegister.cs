@@ -7,76 +7,77 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace br.com.vinicius.projeto.analise.Model
 {
     public class ClientRegister : RegisterBase
     {
-        string provider =
-        //"Oracle.DataAccess.Client.OracleConnection, Oracle.DataAccess";
-        "System.Data.SqlClient";
-        string connectionString = "Data Source=VINICIUS-PC/SQLEXPRESS;Initial Catalog=Analise;Integrated Security=True;Integrated Security=SSPI";
-        //"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)" +
-        //"(HOST=MYHOST)(PORT=1527))(CONNECT_DATA=(SID=MYSERVICE)));" +
-        //"User Id=MYUSER;Password=MYPASS;";
+        private List<Dictionary<string, object>> objectList;
 
-        public override void Select()
+        public override List<Dictionary<string, object>> SelectAll()
         {
-            using (DbConnection conn = (DbConnection)Activator.CreateInstance(Type.GetType(provider), connectionString))
+            using (SqlConnection conn = new SqlConnection(@"data source=VINICIUS-PC\SQLEXPRESS;Initial Catalog=Analise; Integrated Security = SSPI;"))
             {
                 conn.Open();
-                string sql =
-                  "select distinct owner from sys.all_objects order by owner";
-                using (DbCommand comm = conn.CreateCommand())
+                string sql = "select * from  Client";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    comm.CommandText = sql;
-                    using (DbDataReader rdr = comm.ExecuteReader())
+                    try
                     {
-                        while (rdr.Read())
+                        cmd.CommandText = sql;
+                        using (DbDataReader reader = cmd.ExecuteReader())
                         {
-                            string owner = rdr.GetString(0);
-                            Console.WriteLine("{0}", owner);
+                            objectList = new List<Dictionary<string, object>>();
+                            while (reader.Read())
+                            {
+                                var client = new Dictionary<string, object>();
+                                {
+                                    client.Add("Id",Convert.ToInt32(reader["id"]));
+                                    client.Add("CellPhone", reader["cellPhone"]?.ToString());
+                                    client.Add("City", reader["city"].ToString());
+                                    client.Add("Name", reader["name"].ToString());
+                                    client.Add("Registration", Convert.ToInt32(reader["registration"]));
+                                    client.Add("State", reader["state"].ToString());
+                                };
+                                objectList.Add(client);
+                            }
+                            return objectList;
                         }
+                    }
+                    catch (DbException ex)
+                    {
+                        return null;
                     }
                 }
 
             }
+
         }
 
         public override string Insert(Object obj)
         {
-            var factory = DbProviderFactories.GetFactory("System.Data.SqlClient");
-            var type = Type.GetType("SqlProvider");
             Client client = (Client)obj;
+            var sql = @"INSERT INTO Client(name, cellPhone,registration,city,state) VALUES(@param1, @param2, @param3, @param4, @param5)";
             using (SqlConnection conn = new SqlConnection(@"data source=VINICIUS-PC\SQLEXPRESS;Initial Catalog=Analise; Integrated Security = SSPI;"))
             {
                 conn.Open();
                 using (var tran = conn.BeginTransaction())
                 {
-                    using (DbCommand cmd = conn.CreateCommand())
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         try
                         {
-                            var parameter = cmd.CreateParameter();
-                            cmd.CommandText = "INSERT INTO Client(name, cellPhone,registration,city,state) VALUES(@param1, @param2, @param3, @param4, @param5)";
-                            parameter.ParameterName = "@param1";
-                            parameter.Value = client.Name;
-                            cmd.Parameters.Add(parameter);
-                            parameter.ParameterName = "@param2";
-                            parameter.Value = client.CellPhone;
-                            cmd.Parameters.Add(parameter);
-                            parameter.ParameterName = "@param3";
-                            parameter.Value = client.Registration;
-                            cmd.Parameters.Add(parameter);
-                            parameter.ParameterName = "@param4";
-                            parameter.Value = client.City;
-                            cmd.Parameters.Add(parameter);
-                            parameter.ParameterName = "@param5";
-                            parameter.Value = client.State;
-                            cmd.Parameters.Add(parameter);
-                            int modified = cmd.ExecuteNonQuery();
+                            cmd.Transaction = tran;
+                            cmd.Parameters.Add("@param1", SqlDbType.VarChar, 200).Value = client.Name;
+                            cmd.Parameters.Add("@param2", SqlDbType.VarChar, 20).Value = client.CellPhone;
+                            cmd.Parameters.Add("@param3", SqlDbType.Int).Value = client.Registration;
+                            cmd.Parameters.Add("@param4", SqlDbType.VarChar, 200).Value = client.City;
+                            cmd.Parameters.Add("@param5", SqlDbType.Char, 2).Value = client.State;
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
                             tran.Commit();
-                           return Messages.SuccesssDB;
+                            return Messages.SuccesssDB;
                         }
                         catch (DbException ex)
                         {
@@ -85,11 +86,13 @@ namespace br.com.vinicius.projeto.analise.Model
                         }
                         finally
                         {
+                            cmd.Dispose();
                             if (conn.State.Equals("Open")) conn.Close();
                         }
 
                     }
                 }
+
             }
         }
     }
