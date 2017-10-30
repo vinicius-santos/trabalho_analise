@@ -22,12 +22,12 @@ namespace br.com.vinicius.projeto.analise.Forms
             InitializeComponent();
             State state = new State();
             cbEstado.DataSource = state.StateList;
-            dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id" });
-            dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "CellPhone" });
-            dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "City" });
-            dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Name" });
-            dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Registration" });
-            dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "State" });
+            //dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id" });
+            //dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "CellPhone" });
+            //dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "City" });
+            //dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Name" });
+            //dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Registration" });
+            //dtvClient.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "State" });
             bindingNavigator1.BindingSource = bindingSource1;
             bindingSource1.CurrentChanged += new System.EventHandler(bindingSource1_CurrentChanged);
             bindingSource1.DataSource = new PageOffsetList();
@@ -35,26 +35,29 @@ namespace br.com.vinicius.projeto.analise.Forms
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
         {
-            // The desired page has changed, so fetch the page of records using the "Current" offset 
             int offset = (int)bindingSource1.Current;
-            //var records = new List<Record>();
-            //for (int i = offset; i < offset + pageSize && i < totalRecords; i++)
-            //    records.Add(new Record { Index = i });
+
+            dtvClient.DataSource = RefreshGrid();
+            dtvClient.Refresh();
+        }
+
+        private List<Client> RefreshGrid()
+        {
             var register = new ClientRegister();
             var records = register.SelectAll();
             var clients = records.Select(x => new Client
             {
-                Id = Convert.ToInt32(x.Where(y=> y.Key == "Id").FirstOrDefault().Value),
-                CellPhone =(string) x.Where(y=> y.Key == "CellPhone").FirstOrDefault().Value,
-                City = (string)x.Where(y=> y.Key == "City").FirstOrDefault().Value,
-                Name = (string) x.Where(y=> y.Key == "Name").FirstOrDefault().Value,
-                Registration = Convert.ToInt32(x.Where(y=> y.Key == "Registration").FirstOrDefault().Value),
-                State = (string) (x.Where(y=> y.Key == "State").FirstOrDefault().Value),
+                Id = Convert.ToInt32(x.Where(y => y.Key == "Id").FirstOrDefault().Value),
+                CellPhone = (string)x.Where(y => y.Key == "CellPhone").FirstOrDefault().Value,
+                City = (string)x.Where(y => y.Key == "City").FirstOrDefault().Value,
+                Name = (string)x.Where(y => y.Key == "Name").FirstOrDefault().Value,
+                Registration = Convert.ToInt32(x.Where(y => y.Key == "Registration").FirstOrDefault().Value),
+                State = (string)(x.Where(y => y.Key == "State").FirstOrDefault().Value),
             });
-            dtvClient.DataSource = clients.ToList();
+            
+            return clients.ToList();
         }
 
-      
 
         class PageOffsetList : System.ComponentModel.IListSource
         {
@@ -95,7 +98,24 @@ namespace br.com.vinicius.projeto.analise.Forms
             if (!ValidateUtil.validClient(client))
                 lblMessage.Text = Messages.RequiredFields;
             else
+            {
                 lblMessage.Text = register.Insert(client);
+                RefreshGrid();
+                dtvClient.Update();
+                dtvClient.Refresh();
+                CleanFields();
+            }
+        }
+
+        private void CleanFields()
+        {
+            foreach (Control field in this.Controls)
+            {
+                if (field is TextBox)
+                    ((TextBox)field).Clear();
+                else if (field is ComboBox)
+                    ((ComboBox)field).SelectedIndex = 0;
+            }
         }
     }
 }
