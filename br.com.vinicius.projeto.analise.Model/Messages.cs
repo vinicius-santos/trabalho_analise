@@ -22,6 +22,8 @@ namespace br.com.vinicius.projeto.analise.Model
 
         public static string SuccesssDB = "Operação realizada com sucesso!";
         public static string RequiredFields = "Por favor, preencha todos os campos obrigatórios marcados com '*'";
+        public static string StateError = "Por favor, insira um estado existente.";
+        public static string Empty = "Não existem valores.";
 
 
     }

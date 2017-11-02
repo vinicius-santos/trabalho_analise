@@ -18,6 +18,8 @@ namespace br.com.vinicius.projeto.analise.Model
         public DbProviderFactory factory;
 
         public abstract string Insert(Object obj);
+        public abstract string Edit(Object obj);
+        public abstract string Delete(Object obj);
         public abstract List<Dictionary<string, object>> SelectAll();
 
     }

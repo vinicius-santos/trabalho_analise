@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Collections;
+using System.Data.OleDb;
 
 namespace br.com.vinicius.projeto.analise.Model
 {
@@ -18,7 +19,6 @@ namespace br.com.vinicius.projeto.analise.Model
         public override List<Dictionary<string, object>> SelectAll()
         {
             factory = DbProviderFactories.GetFactory(provider);
-
             connection = factory.CreateConnection();
             connection.ConnectionString = connectionString;
 
@@ -63,24 +63,43 @@ namespace br.com.vinicius.projeto.analise.Model
 
         public override string Insert(Object obj)
         {
+            factory = DbProviderFactories.GetFactory(provider);
+            connection = factory.CreateConnection();
+            connection.ConnectionString = connectionString;
             Client client = (Client)obj;
             var sql = @"INSERT INTO Client(name, cellPhone,registration,city,state) VALUES(@param1, @param2, @param3, @param4, @param5)";
-            using (SqlConnection conn = new SqlConnection(@"data source=VINICIUS-PC\SQLEXPRESS;Initial Catalog=Analise; Integrated Security = SSPI;"))
+            using (DbConnection conn = connection)
             {
                 conn.Open();
                 using (var tran = conn.BeginTransaction())
                 {
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (DbCommand cmd = conn.CreateCommand())
                     {
+                        cmd.CommandText = sql;
+                        cmd.CommandType = CommandType.Text;
                         try
                         {
                             cmd.Transaction = tran;
-                            cmd.Parameters.Add("@param1", SqlDbType.VarChar, 200).Value = client.Name;
-                            cmd.Parameters.Add("@param2", SqlDbType.VarChar, 20).Value = client.CellPhone;
-                            cmd.Parameters.Add("@param3", SqlDbType.Int).Value = client.Registration;
-                            cmd.Parameters.Add("@param4", SqlDbType.VarChar, 200).Value = client.City;
-                            cmd.Parameters.Add("@param5", SqlDbType.Char, 2).Value = client.State;
-                            cmd.CommandType = CommandType.Text;
+                            var parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param1";
+                            parameter.Value = client.Name;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param2";
+                            parameter.Value = client.CellPhone;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param3";
+                            parameter.Value = client.Registration;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param4";
+                            parameter.Value = client.City;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param5";
+                            parameter.Value = client.State;
+                            cmd.Parameters.Add(parameter);
                             cmd.ExecuteNonQuery();
                             tran.Commit();
                             return Messages.SuccesssDB;
@@ -98,7 +117,111 @@ namespace br.com.vinicius.projeto.analise.Model
 
                     }
                 }
+            }
+        }
 
+
+        public override string Edit(Object obj)
+        {
+            factory = DbProviderFactories.GetFactory(provider);
+            connection = factory.CreateConnection();
+            connection.ConnectionString = connectionString;
+            Client client = (Client)obj;
+            var sql = @"UPDATE  Client Set name = @param1 , cellPhone = @param2,registration = @param3,city =@param4,state =@param5 Where id = @id";
+            using (DbConnection conn = connection)
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                {
+                    using (DbCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = sql;
+                        cmd.CommandType = CommandType.Text;
+                        try
+                        {
+                            cmd.Transaction = tran;
+                            var parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@id";
+                            parameter.Value = client.Id;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param1";
+                            parameter.Value = client.Name;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param2";
+                            parameter.Value = client.CellPhone;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param3";
+                            parameter.Value = client.Registration;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param4";
+                            parameter.Value = client.City;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param5";
+                            parameter.Value = client.State.ToUpper();
+                            cmd.Parameters.Add(parameter);
+                            cmd.ExecuteNonQuery();
+                            tran.Commit();
+                            return Messages.SuccesssDB;
+                        }
+                        catch (DbException ex)
+                        {
+                            tran.Rollback();
+                            return Messages.ErrorDB(ex);
+                        }
+                        finally
+                        {
+                            cmd.Dispose();
+                            if (conn.State.Equals("Open")) conn.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        public override string Delete(Object obj)
+        {
+            factory = DbProviderFactories.GetFactory(provider);
+            connection = factory.CreateConnection();
+            connection.ConnectionString = connectionString;
+            Client client = (Client)obj;
+            var sql = @"Delete FROM   Client  Where id = @id";
+            using (DbConnection conn = connection)
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                {
+                    using (DbCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = sql;
+                        cmd.CommandType = CommandType.Text;
+                        try
+                        {
+                            cmd.Transaction = tran;
+                            var parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@id";
+                            parameter.Value = client.Id;
+                            cmd.Parameters.Add(parameter);
+                            cmd.ExecuteNonQuery();
+                            tran.Commit();
+                            return Messages.SuccesssDB;
+                        }
+                        catch (DbException ex)
+                        {
+                            tran.Rollback();
+                            return Messages.ErrorDB(ex);
+                        }
+                        finally
+                        {
+                            cmd.Dispose();
+                            if (conn.State.Equals("Open")) conn.Close();
+                        }
+                    }
+                }
             }
         }
     }
