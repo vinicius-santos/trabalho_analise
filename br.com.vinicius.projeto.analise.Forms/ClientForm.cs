@@ -31,6 +31,7 @@ namespace br.com.vinicius.projeto.analise.Forms
             bindingNavigator1.BindingSource = bindingSource1;
             bindingSource1.CurrentChanged += new System.EventHandler(bindingSource1_CurrentChanged);
             bindingSource1.DataSource = new PageOffsetList();
+            
         }
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)

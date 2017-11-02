@@ -17,15 +17,21 @@ namespace br.com.vinicius.projeto.analise.Model
 
         public override List<Dictionary<string, object>> SelectAll()
         {
-            using (SqlConnection conn = new SqlConnection(@"data source=VINICIUS-PC\SQLEXPRESS;Initial Catalog=Analise; Integrated Security = SSPI;"))
+            factory = DbProviderFactories.GetFactory(provider);
+
+            connection = factory.CreateConnection();
+            connection.ConnectionString = connectionString;
+
+            using (DbConnection conn = connection)
             {
                 conn.Open();
                 string sql = "select * from  Client";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (DbCommand cmd = conn.CreateCommand())
                 {
                     try
                     {
                         cmd.CommandText = sql;
+                        cmd.CommandType = CommandType.Text;
                         using (DbDataReader reader = cmd.ExecuteReader())
                         {
                             objectList = new List<Dictionary<string, object>>();
@@ -33,7 +39,7 @@ namespace br.com.vinicius.projeto.analise.Model
                             {
                                 var client = new Dictionary<string, object>();
                                 {
-                                    client.Add("Id",Convert.ToInt32(reader["id"]));
+                                    client.Add("Id", Convert.ToInt32(reader["id"]));
                                     client.Add("CellPhone", reader["cellPhone"]?.ToString());
                                     client.Add("City", reader["city"].ToString());
                                     client.Add("Name", reader["name"].ToString());
