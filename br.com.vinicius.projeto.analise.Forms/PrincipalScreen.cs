@@ -34,5 +34,12 @@ namespace br.com.vinicius.projeto.analise.Forms
         {
             KeyPressBase(sender, e);
         }
+
+        private void tipoDeAnáliseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AnalysisForm form = new AnalysisForm();
+            form.Owner = this;
+            form.ShowDialog();
+        }
     }
 }

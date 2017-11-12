@@ -92,5 +92,10 @@ namespace br.com.vinicius.projeto.analise.Model
                 state = value;
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
