@@ -13,6 +13,8 @@ namespace br.com.vinicius.projeto.analise.Forms
 {
     public partial class AnalysisForm : Form
     {
+
+
         public AnalysisForm()
         {
             InitializeComponent();
@@ -28,7 +30,6 @@ namespace br.com.vinicius.projeto.analise.Forms
                 Registration = Convert.ToInt32(x.Where(y => y.Key == "Registration").FirstOrDefault().Value),
                 State = (string)(x.Where(y => y.Key == "State").FirstOrDefault().Value),
             });
-            
             cbCliente.DataSource = clients.ToList();
             cbSolicitante.DataSource = clients.ToList();
             cbSolicitante.SelectedIndex = -1;
@@ -40,7 +41,7 @@ namespace br.com.vinicius.projeto.analise.Forms
 
             var qtdAmostra = new int[]
             {
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16,17,18,19,20 // total de vinte amostras pode ser alterado.
             };
             cbQtdAmostra.DataSource = qtdAmostra;
             cbQtdAmostra.SelectedIndex = -1;
@@ -50,7 +51,20 @@ namespace br.com.vinicius.projeto.analise.Forms
 
         private void cbSolicitante_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+        }
 
+        private void AnalysisForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbCliente_DropDownClosed(object sender, EventArgs e)
+        {
+                var client = (Client)cbCliente.SelectedItem;
+                lblCidadeShow.Text = client.City;
+                lblMatriculaShow.Text = Convert.ToString(client.Registration);
+                lblTelefoneShow.Text = client.CellPhone;
         }
     }
 }

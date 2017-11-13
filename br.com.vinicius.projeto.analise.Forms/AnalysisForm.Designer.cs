@@ -66,6 +66,7 @@
             this.cbCliente.Name = "cbCliente";
             this.cbCliente.Size = new System.Drawing.Size(279, 21);
             this.cbCliente.TabIndex = 1;
+            this.cbCliente.DropDownClosed += new System.EventHandler(this.cbCliente_DropDownClosed);
             // 
             // lblSolicitante
             // 
@@ -132,12 +133,12 @@
             this.gpDadosCliente.Size = new System.Drawing.Size(350, 131);
             this.gpDadosCliente.TabIndex = 8;
             this.gpDadosCliente.TabStop = false;
-            this.gpDadosCliente.Text = "Dadois cliente";
+            this.gpDadosCliente.Text = "Dados cliente";
             // 
             // lblCidadeShow
             // 
             this.lblCidadeShow.AutoSize = true;
-            this.lblCidadeShow.Location = new System.Drawing.Point(61, 113);
+            this.lblCidadeShow.Location = new System.Drawing.Point(61, 72);
             this.lblCidadeShow.Name = "lblCidadeShow";
             this.lblCidadeShow.Size = new System.Drawing.Size(0, 13);
             this.lblCidadeShow.TabIndex = 5;
@@ -145,7 +146,7 @@
             // lblCidade
             // 
             this.lblCidade.AutoSize = true;
-            this.lblCidade.Location = new System.Drawing.Point(6, 113);
+            this.lblCidade.Location = new System.Drawing.Point(6, 72);
             this.lblCidade.Name = "lblCidade";
             this.lblCidade.Size = new System.Drawing.Size(40, 13);
             this.lblCidade.TabIndex = 4;
@@ -154,7 +155,7 @@
             // lblMatriculaShow
             // 
             this.lblMatriculaShow.AutoSize = true;
-            this.lblMatriculaShow.Location = new System.Drawing.Point(61, 64);
+            this.lblMatriculaShow.Location = new System.Drawing.Point(61, 49);
             this.lblMatriculaShow.Name = "lblMatriculaShow";
             this.lblMatriculaShow.Size = new System.Drawing.Size(0, 13);
             this.lblMatriculaShow.TabIndex = 3;
@@ -162,7 +163,7 @@
             // lblMatricula
             // 
             this.lblMatricula.AutoSize = true;
-            this.lblMatricula.Location = new System.Drawing.Point(6, 64);
+            this.lblMatricula.Location = new System.Drawing.Point(6, 49);
             this.lblMatricula.Name = "lblMatricula";
             this.lblMatricula.Size = new System.Drawing.Size(52, 13);
             this.lblMatricula.TabIndex = 2;
@@ -210,6 +211,7 @@
             this.Controls.Add(this.lblCliente);
             this.Name = "AnalysisForm";
             this.Text = "AnalysisForm";
+            this.Load += new System.EventHandler(this.AnalysisForm_Load);
             this.gpDadosCliente.ResumeLayout(false);
             this.gpDadosCliente.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
