@@ -28,16 +28,29 @@ namespace br.com.vinicius.projeto.analise.Forms
                 Registration = Convert.ToInt32(x.Where(y => y.Key == "Registration").FirstOrDefault().Value),
                 State = (string)(x.Where(y => y.Key == "State").FirstOrDefault().Value),
             });
+            
             cbCliente.DataSource = clients.ToList();
             cbSolicitante.DataSource = clients.ToList();
+            cbSolicitante.SelectedIndex = -1;
+            cbCliente.SelectedIndex = -1;
+
             var tipoAnalise = new TipoAnalise();
             cbTipoAnalise.DataSource = tipoAnalise.Tipos;
+            cbTipoAnalise.SelectedIndex = -1;
 
             var qtdAmostra = new int[]
             {
                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
             };
             cbQtdAmostra.DataSource = qtdAmostra;
+            cbQtdAmostra.SelectedIndex = -1;
+
+
+        }
+
+        private void cbSolicitante_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

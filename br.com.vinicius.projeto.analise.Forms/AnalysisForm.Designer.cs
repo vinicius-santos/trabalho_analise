@@ -83,6 +83,7 @@
             this.cbSolicitante.Name = "cbSolicitante";
             this.cbSolicitante.Size = new System.Drawing.Size(279, 21);
             this.cbSolicitante.TabIndex = 3;
+            this.cbSolicitante.SelectedIndexChanged += new System.EventHandler(this.cbSolicitante_SelectedIndexChanged);
             // 
             // lblTipoAnalise
             // 
