@@ -30,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblCliente = new System.Windows.Forms.Label();
             this.cbCliente = new System.Windows.Forms.ComboBox();
             this.lblSolicitante = new System.Windows.Forms.Label();
@@ -46,8 +47,10 @@
             this.lblTelefoneShow = new System.Windows.Forms.Label();
             this.lblTelefone = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.gpDadosCliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCliente
@@ -119,6 +122,7 @@
             this.cbQtdAmostra.Name = "cbQtdAmostra";
             this.cbQtdAmostra.Size = new System.Drawing.Size(95, 21);
             this.cbQtdAmostra.TabIndex = 7;
+            this.cbQtdAmostra.DropDownClosed += new System.EventHandler(this.cbQtdAmostra_DropDownClosed);
             // 
             // gpDadosCliente
             // 
@@ -188,10 +192,11 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(8, 226);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(727, 216);
+            this.dataGridView1.Size = new System.Drawing.Size(718, 216);
             this.dataGridView1.TabIndex = 9;
             // 
             // AnalysisForm
@@ -215,6 +220,7 @@
             this.gpDadosCliente.ResumeLayout(false);
             this.gpDadosCliente.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,5 +244,6 @@
         private System.Windows.Forms.Label lblCidadeShow;
         private System.Windows.Forms.Label lblCidade;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

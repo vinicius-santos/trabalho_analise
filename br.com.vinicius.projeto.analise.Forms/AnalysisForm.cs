@@ -19,6 +19,8 @@ namespace br.com.vinicius.projeto.analise.Forms
         {
             InitializeComponent();
 
+            bindingSource1.CurrentChanged += new System.EventHandler(cbQtdAmostra_DropDownClosed);
+            //bindingSource1.DataSource = new List<Analise>();
             var register = new ClientRegister();
             var records = register.SelectAll();
             var clients = records.Select(x => new Client
@@ -49,9 +51,15 @@ namespace br.com.vinicius.projeto.analise.Forms
 
         }
 
+        //private void bindingSource1_CurrentChanged(object sender, EventArgs e)
+        //{
+        //    dtvClient.DataSource = RefreshGrid();
+        //    dtvClient.Refresh();
+        //}
+
         private void cbSolicitante_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void AnalysisForm_Load(object sender, EventArgs e)
@@ -61,10 +69,30 @@ namespace br.com.vinicius.projeto.analise.Forms
 
         private void cbCliente_DropDownClosed(object sender, EventArgs e)
         {
-                var client = (Client)cbCliente.SelectedItem;
-                lblCidadeShow.Text = client.City;
-                lblMatriculaShow.Text = Convert.ToString(client.Registration);
-                lblTelefoneShow.Text = client.CellPhone;
+            var client = (Client)cbCliente.SelectedItem;
+            lblCidadeShow.Text = client.City;
+            lblMatriculaShow.Text = Convert.ToString(client.Registration);
+            lblTelefoneShow.Text = client.CellPhone;
+        }
+
+        private void cbQtdAmostra_DropDownClosed(object sender, EventArgs e)
+        {
+            var qtd = Convert.ToInt32(cbQtdAmostra.SelectedValue);
+            var list = new List<Analise>();
+            for (int i = 0; i < qtd; i++)
+            {
+                Analise analise = new Analise();
+                list.Add(analise);
+            }
+            dataGridView1.DataSource = list.ToList();
+            dataGridView1.Columns["id"].Visible = false;
+            dataGridView1.Columns["tipoAnalise"].Visible = false;
+            dataGridView1.Columns["status"].Visible = false;
+            dataGridView1.Columns["idCliente"].Visible = false;
+            dataGridView1.Columns["idSolicitante"].Visible = false;
+            dataGridView1.Columns["geoReferencia"].HeaderText = "GeoReferência";
+            dataGridView1.Columns["complemento"].HeaderText = "Complemento";
+            dataGridView1.Refresh();
         }
     }
 }
