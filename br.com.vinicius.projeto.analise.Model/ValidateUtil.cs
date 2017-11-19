@@ -16,6 +16,16 @@ namespace br.com.vinicius.projeto.analise.Model
             if (String.IsNullOrEmpty(client.State)) return false;
             return true;
         }
+        public static bool ValidAmostra(Amostra amostra)
+        {
+            if (String.IsNullOrEmpty(amostra.Complemento)) return false;
+            if (String.IsNullOrEmpty(amostra.GeoReferencia)) return false;
+            if (amostra.IdCliente <= 0) return false;
+            if (amostra.IdSolicitante <= 0) return false;
+            if (String.IsNullOrEmpty(amostra.Status)) return false;
+            if (String.IsNullOrEmpty(amostra.TipoAnalise)) return false;
+            return true;
+        }
         public static bool ValidFieldInt(int value)
         {
             if (value <= 0) return false;

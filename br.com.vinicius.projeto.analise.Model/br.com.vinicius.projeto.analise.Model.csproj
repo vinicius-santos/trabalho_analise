@@ -129,7 +129,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analise.cs" />
+    <Compile Include="Amostra.cs" />
+    <Compile Include="AmostraRegister.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientRegister.cs" />
     <Compile Include="FormControl.cs">

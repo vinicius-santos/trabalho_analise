@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace br.com.vinicius.projeto.analise.Model
 {
-    public class Analise
+    public class Amostra
     {
 
         private int id;

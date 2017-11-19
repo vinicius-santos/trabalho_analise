@@ -78,10 +78,10 @@ namespace br.com.vinicius.projeto.analise.Forms
         private void cbQtdAmostra_DropDownClosed(object sender, EventArgs e)
         {
             var qtd = Convert.ToInt32(cbQtdAmostra.SelectedValue);
-            var list = new List<Analise>();
+            var list = new List<Amostra>();
             for (int i = 0; i < qtd; i++)
             {
-                Analise analise = new Analise();
+                Amostra analise = new Amostra();
                 list.Add(analise);
             }
             dataGridView1.DataSource = list.ToList();
@@ -93,6 +93,46 @@ namespace br.com.vinicius.projeto.analise.Forms
             dataGridView1.Columns["geoReferencia"].HeaderText = "GeoReferência";
             dataGridView1.Columns["complemento"].HeaderText = "Complemento";
             dataGridView1.Refresh();
+        }
+
+        private void btnCadastrar_Click(object sender, EventArgs e)
+        {
+
+            var register = new AmostraRegister();
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                var amostra = new Amostra();
+                amostra.Complemento = (String)row.Cells["complemento"].Value;
+                amostra.GeoReferencia = (String)row.Cells["geoReferencia"].Value;
+                var client = (Client)cbCliente.SelectedItem;
+                var solicitante = (Client)cbSolicitante.SelectedItem;
+                amostra.IdCliente = client.Id;
+                amostra.IdSolicitante = solicitante.Id;
+                amostra.Status = "Pendente";
+                amostra.TipoAnalise = cbTipoAnalise.Text;
+
+                if (!ValidateUtil.ValidAmostra(amostra))
+                    lblMessage.Text = Messages.RequiredFields;
+                else
+                    lblMessage.Text = register.Insert(amostra);
+            }
+
+            dataGridView1.DataSource = null;
+            CleanFields();
+
+
+        }
+
+        private void CleanFields()
+        {
+            foreach (Control field in this.Controls)
+            {
+                if (field is TextBox)
+                    ((TextBox)field).Clear();
+                else if (field is ComboBox)
+                    ((ComboBox)field).SelectedIndex = 0;
+            }
         }
     }
 }
