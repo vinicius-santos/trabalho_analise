@@ -33,6 +33,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipoDeAnáliseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +59,8 @@
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clienteToolStripMenuItem,
-            this.tipoDeAnáliseToolStripMenuItem});
+            this.tipoDeAnáliseToolStripMenuItem,
+            this.caixaToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem1.Text = "Cadastro";
@@ -77,6 +79,13 @@
             this.tipoDeAnáliseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tipoDeAnáliseToolStripMenuItem.Text = "Análise";
             this.tipoDeAnáliseToolStripMenuItem.Click += new System.EventHandler(this.tipoDeAnáliseToolStripMenuItem_Click);
+            // 
+            // caixaToolStripMenuItem
+            // 
+            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
+            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.caixaToolStripMenuItem.Text = "Caixa";
+            this.caixaToolStripMenuItem.Click += new System.EventHandler(this.caixaToolStripMenuItem_Click);
             // 
             // PrincipalScreen
             // 
@@ -102,6 +111,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tipoDeAnáliseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem caixaToolStripMenuItem;
     }
 }
 

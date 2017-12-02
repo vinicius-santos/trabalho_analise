@@ -21,13 +21,17 @@ namespace br.com.vinicius.projeto.analise.Model
             using (DbConnection conn = connection)
             {
                 conn.Open();
-                string sql = "select * from  Amostra";
+                string sql = "select * from  Amostra where Status =@status";
                 using (DbCommand cmd = conn.CreateCommand())
                 {
                     try
                     {
                         cmd.CommandText = sql;
                         cmd.CommandType = CommandType.Text;
+                        var parameter = cmd.CreateParameter();
+                        parameter.ParameterName = "@status";
+                        parameter.Value = "Pendente";
+                        cmd.Parameters.Add(parameter);
                         using (DbDataReader reader = cmd.ExecuteReader())
                         {
                             objectList = new List<Dictionary<string, object>>();
@@ -121,9 +125,50 @@ namespace br.com.vinicius.projeto.analise.Model
             }
         }
 
-        public override string Edit(object obj)
+        public override string Edit(Object obj)
         {
-            throw new NotImplementedException();
+            factory = DbProviderFactories.GetFactory(provider);
+            connection = factory.CreateConnection();
+            connection.ConnectionString = connectionString;
+            Amostra amostra = (Amostra)obj;
+            var sql = @"UPDATE  Amostra Set Status = @param1 Where id = @id";
+            using (DbConnection conn = connection)
+            {
+                conn.Open();
+                using (var tran = conn.BeginTransaction())
+                {
+                    using (DbCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = sql;
+                        cmd.CommandType = CommandType.Text;
+                        try
+                        {
+                            cmd.Transaction = tran;
+                            var parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@id";
+                            parameter.Value = amostra.Id;
+                            cmd.Parameters.Add(parameter);
+                            parameter = cmd.CreateParameter();
+                            parameter.ParameterName = "@param1";
+                            parameter.Value = amostra.Status;
+                            cmd.Parameters.Add(parameter);
+                            cmd.ExecuteNonQuery();
+                            tran.Commit();
+                            return Messages.SuccesssDB;
+                        }
+                        catch (DbException ex)
+                        {
+                            tran.Rollback();
+                            return Messages.ErrorDB(ex);
+                        }
+                        finally
+                        {
+                            cmd.Dispose();
+                            if (conn.State.Equals("Open")) conn.Close();
+                        }
+                    }
+                }
+            }
         }
 
         public override string Delete(object obj)

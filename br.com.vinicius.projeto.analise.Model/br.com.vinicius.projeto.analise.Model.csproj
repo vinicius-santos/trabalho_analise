@@ -131,6 +131,8 @@
   <ItemGroup>
     <Compile Include="Amostra.cs" />
     <Compile Include="AmostraRegister.cs" />
+    <Compile Include="Caixa.cs" />
+    <Compile Include="CaixaRegister.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientRegister.cs" />
     <Compile Include="FormControl.cs">

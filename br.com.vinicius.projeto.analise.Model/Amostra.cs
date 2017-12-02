@@ -17,6 +17,11 @@ namespace br.com.vinicius.projeto.analise.Model
         private int idCliente;
         private int idSolicitante;
 
+        public override string ToString()
+        {
+            return tipoAnalise;
+        }
+
         public int Id
         {
             get

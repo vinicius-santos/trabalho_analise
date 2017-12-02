@@ -41,5 +41,12 @@ namespace br.com.vinicius.projeto.analise.Forms
             form.Owner = this;
             form.ShowDialog();
         }
+
+        private void caixaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BoxForm form = new BoxForm();
+            form.Owner = this;
+            form.ShowDialog();
+        }
     }
 }
