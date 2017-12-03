@@ -11,6 +11,8 @@ namespace br.com.vinicius.projeto.analise.Model
         private int id;
         private int idAmostra;
 
+        private bool analisada;
+
         public int Id
         {
             get
@@ -34,6 +36,19 @@ namespace br.com.vinicius.projeto.analise.Model
             set
             {
                 idAmostra = value;
+            }
+        }
+
+        public bool Analisada
+        {
+            get
+            {
+                return analisada;
+            }
+
+            set
+            {
+                analisada = value;
             }
         }
     }

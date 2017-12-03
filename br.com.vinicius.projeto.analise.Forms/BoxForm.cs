@@ -1,9 +1,12 @@
 ﻿using br.com.vinicius.projeto.analise.Model;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -102,6 +105,10 @@ namespace br.com.vinicius.projeto.analise.Forms
                 register.Insert(caixa);
                 amostraRegister.Edit(amostra);
             }
+
+            FolhaForm form = new FolhaForm();
+            form.Owner = this;
+            form.ShowDialog();
         }
     }
 }

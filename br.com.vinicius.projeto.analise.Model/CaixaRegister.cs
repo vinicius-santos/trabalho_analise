@@ -10,6 +10,8 @@ namespace br.com.vinicius.projeto.analise.Model
 {
     public class CaixaRegister : RegisterBase
     {
+        private List<Dictionary<string, object>> objectList;
+
         public override string Delete(object obj)
         {
             throw new NotImplementedException();
@@ -63,9 +65,56 @@ namespace br.com.vinicius.projeto.analise.Model
             }
         }
 
+        
         public override List<Dictionary<string, object>> SelectAll()
         {
-            throw new NotImplementedException();
+            factory = DbProviderFactories.GetFactory(provider);
+            connection = factory.CreateConnection();
+            connection.ConnectionString = connectionString;
+
+            using (DbConnection conn = connection)
+            {
+                conn.Open();
+                string sql = "select top 12 * from  Amostra" +
+                    " inner join Caixa on Amostra.id = Caixa.idAnalise where analisada is null or analisada !=@status";
+                using (DbCommand cmd = conn.CreateCommand())
+                {
+                    try
+                    {
+                        cmd.CommandText = sql;
+                        cmd.CommandType = CommandType.Text;
+                        var parameter = cmd.CreateParameter();
+                        parameter.ParameterName = "@status";
+                        parameter.Value = 1;
+                        cmd.Parameters.Add(parameter);
+                        using (DbDataReader reader = cmd.ExecuteReader())
+                        {
+                            objectList = new List<Dictionary<string, object>>();
+                            while (reader.Read())
+                            {
+                                var amostra = new Dictionary<string, object>();
+                                {
+                                    amostra.Add("Id", Convert.ToInt32(reader["id"]));
+                                    amostra.Add("TipoAnalise", reader["tipoAnalise"]?.ToString());
+                                    amostra.Add("GeoReferencia", reader["geoReferencia"].ToString());
+                                    amostra.Add("Complemento", reader["complemento"].ToString());
+                                    amostra.Add("IdCliente", Convert.ToInt32(reader["idCliente"]));
+                                    amostra.Add("IdSolicitante", Convert.ToInt32(reader["idSolicitante"]));
+                                    amostra.Add("Status", reader["status"].ToString());
+                                };
+                                objectList.Add(amostra);
+                            }
+                            return objectList;
+                        }
+                    }
+                    catch (DbException ex)
+                    {
+                        return null;
+                    }
+                }
+
+            }
+
         }
     }
 }
