@@ -175,6 +175,73 @@ namespace br.com.vinicius.projeto.analise.Forms
 
             this.Close();
         }
+
+        private void btnPDF_Click(object sender, EventArgs e)
+        {
+            //Creating iTextSharp Table from the DataTable data
+            PdfPTable pdfTable = new PdfPTable(dataGridView1.ColumnCount);
+            pdfTable.DefaultCell.Padding = 3;
+            pdfTable.WidthPercentage = 100;
+            pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfTable.DefaultCell.BorderWidth = 1;
+
+            //Adding Header row
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
+                cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
+                pdfTable.AddCell(cell);
+            }
+
+            //Adding DataRow
+            List<int> grayColors = new List<int>();
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    pdfTable.AddCell(cell.Value?.ToString());
+                }
+            }
+            foreach (var item in pdfTable.Rows)
+            {
+                var count = 0;
+                foreach (var cell in item.GetCells())
+                {
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        var countGrid = 0;
+                        foreach (DataGridViewCell cellGrid in row.Cells)
+                        {
+                            if (cellGrid.Style.BackColor.Name.Equals("Gray"))
+                            {
+                                if (count == countGrid)
+                                {
+                                    cell.BackgroundColor = new iTextSharp.text.BaseColor(20, 120, 120);
+                                }
+                            }
+                            countGrid++;
+                        }
+                    }
+                        count++;
+                }
+            }
+
+            //Exporting to PDF
+            string folderPath = "C:\\PDFs\\";
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            using (FileStream stream = new FileStream(folderPath + "DataGridViewExport.pdf", FileMode.Create))
+            {
+                Document pdfDoc = new Document(PageSize.A2, 10f, 10f, 10f, 0f);
+                PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                pdfDoc.Add(pdfTable);
+                pdfDoc.Close();
+                stream.Close();
+            }
+        }
     }
 }
 
