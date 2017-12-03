@@ -20,6 +20,7 @@ namespace br.com.vinicius.projeto.analise.Model
         public override string Edit(object obj)
         {
             throw new NotImplementedException();
+
         }
 
         public override string Insert(Object obj)
@@ -75,8 +76,8 @@ namespace br.com.vinicius.projeto.analise.Model
             using (DbConnection conn = connection)
             {
                 conn.Open();
-                string sql = "select top 12 * from  Amostra" +
-                    " inner join Caixa on Amostra.id = Caixa.idAnalise where analisada is null or analisada !=@status";
+                string sql = "select * from  amostra " +
+                    " inner join caixa on amostra.id = caixa.idAnalise where analisada is null or analisada !=@status ORDER BY amostra.id ASC LIMIT 10";
                 using (DbCommand cmd = conn.CreateCommand())
                 {
                     try

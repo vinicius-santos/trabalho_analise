@@ -8,6 +8,7 @@ namespace br.com.vinicius.projeto.analise.Model
 {
     public class FolhaBase
     {
+        private int id;
         private int numero;
         private string idTipo;
         private decimal ph;
@@ -272,6 +273,19 @@ namespace br.com.vinicius.projeto.analise.Model
             set
             {
                 b = value;
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
             }
         }
     }
