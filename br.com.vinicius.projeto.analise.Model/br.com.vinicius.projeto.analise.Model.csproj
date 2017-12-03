@@ -140,6 +140,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="ClientRegister.cs" />
     <Compile Include="FolhaBase.cs" />
+    <Compile Include="FolhaRegister.cs" />
     <Compile Include="FormControl.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -211,32 +211,6 @@ namespace br.com.vinicius.projeto.analise.Forms
                     pdfTable.AddCell(txt);
                 }
             }
-            //foreach (var item in pdfTable.Rows)
-            //{
-            //    var count = 0;
-            //    foreach (var cell in item.GetCells())
-            //    {
-            //        var countGrid = 0;
-            //        foreach (DataGridViewRow row in dataGridView1.Rows)
-            //        {
-            //            foreach (DataGridViewCell cellGrid in row.Cells)
-            //            {
-            //                var xxx = cell.Table.;
-            //                var type = cellGrid.Value?.ToString();
-            //                if (cellGrid.Style.BackColor.Name.Equals("Gray"))
-            //                {
-            //                    if (count == countGrid)
-            //                    {
-            //                        cell.BackgroundColor = BaseColor.GRAY;
-            //                    }
-
-            //                }
-            //                countGrid++;
-            //            }
-            //        }
-            //        count++;
-            //    }
-            //}
 
             //Exporting to PDF
             string folderPath = "C:\\PDFs\\";
@@ -253,6 +227,11 @@ namespace br.com.vinicius.projeto.analise.Forms
                 pdfDoc.Close();
                 stream.Close();
             }
+        }
+
+        private void btnSalvarLaudo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
