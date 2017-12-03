@@ -20,9 +20,7 @@ namespace br.com.vinicius.projeto.analise.Forms
         public FolhaForm()
         {
             InitializeComponent();
-
             bindingSource1.CurrentChanged += new System.EventHandler(bindingSource1_CurrentChanged);
-            //bindingSource1.DataSource = new List<Analise>();
             var register = new CaixaRegister();
             var records = register.SelectAll();
             var amostra = records.Select(x => new Amostra
@@ -36,7 +34,6 @@ namespace br.com.vinicius.projeto.analise.Forms
                 TipoAnalise = (string)(x.Where(y => y.Key == "TipoAnalise").FirstOrDefault().Value),
             });
 
-
             List<FolhaBase> folhaList = new List<FolhaBase>();
             var count = 1;
             foreach (var item in amostra)
@@ -47,43 +44,70 @@ namespace br.com.vinicius.projeto.analise.Forms
                 folhaList.Add(folha);
                 count++;
             }
-           var dataTable =  CreateDataTable(folhaList);
+            var dataTable = CreateDataTable(folhaList);
 
             foreach (DataColumn dc in dataTable.Columns)
             {
-                var c = new DataGridViewTextBoxColumn() { HeaderText = dc.ColumnName };
-                dataGridView1.Columns.Add(c);
-
-
+                AddColumns(dc);
             }
-
             foreach (DataRow dc in dataTable.Rows)
             {
-                dataGridView1.Rows.Add(dc.ItemArray);
-
+                AddRows(dc);
             }
-            //dataGridView1.DataSource = folha;
 
-            //dataGridView1.Columns["Numero"];
-            //dataGridView1.Columns["IdTipo"];
-            //dataGridView1.Columns["Ph"].Visible = true;
-            //dataGridView1.Columns["Smp"].Visible = true;
-            //dataGridView1.Columns["Argila"].Visible = true;
-            //dataGridView1.Columns["Mo"].Visible = true;
-            //dataGridView1.Columns["Ca"].Visible = true;
-            //dataGridView1.Columns["Mg"].Visible = true;
-            //dataGridView1.Columns["Al"].Visible = true;
-            //dataGridView1.Columns["P"].Visible = true;
-            //dataGridView1.Columns["K"].Visible = true;
-            //dataGridView1.Columns["Na"].Visible = true;
-            //dataGridView1.Columns["Cu"].Visible = true;
-            //dataGridView1.Columns["Zn"].Visible = true;
-            //dataGridView1.Columns["Fe"].Visible = true;
-            //dataGridView1.Columns["Mn"].Visible = true;
-            //dataGridView1.Columns["S"].Visible = true;
-            //dataGridView1.Columns["PResina"].Visible = true;
-            //dataGridView1.Columns["B"].Visible = true;
+            count = 0;
+            count = DisableCell(count, dataTable);
+
             dataGridView1.Refresh();
+        }
+
+        private void AddRows(DataRow dc)
+        {
+            dataGridView1.Rows.Add(dc.ItemArray);
+        }
+
+        private void AddColumns(DataColumn dc)
+        {
+            var c = new DataGridViewTextBoxColumn() { HeaderText = dc.ColumnName };
+            dataGridView1.Columns.Add(c);
+        }
+
+        private int DisableCell(int count, DataTable dataTable)
+        {
+            foreach (DataRow dc in dataTable.Rows)
+            {
+                if (dc["idTipo"].ToString().Contains("B1 - Básica"))
+                {
+                    //dataGridView1.Rows[count].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[12].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[12].Style.BackColor = Color.Gray;
+                    dataGridView1.Rows[count].Cells[13].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[13].Style.BackColor = Color.Gray;
+                    dataGridView1.Rows[count].Cells[14].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[14].Style.BackColor = Color.Gray;
+                    dataGridView1.Rows[count].Cells[15].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[15].Style.BackColor = Color.Gray;
+                    dataGridView1.Rows[count].Cells[16].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[16].Style.BackColor = Color.Gray;
+                    dataGridView1.Rows[count].Cells[17].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[17].Style.BackColor = Color.Gray;
+                    dataGridView1.Rows[count].Cells[18].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[18].Style.BackColor = Color.Gray;
+                }
+                else if (dc["idTipo"].ToString().Contains("E5 - Completa + S + P - Resina"))
+                {
+                    dataGridView1.Rows[count].Cells[18].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[18].Style.BackColor = Color.Gray;
+                }
+                else if (dc["idTipo"].ToString().Contains("E4 - Completa + S + B"))
+                {
+                    dataGridView1.Rows[count].Cells[17].ReadOnly = true;
+                    dataGridView1.Rows[count].Cells[17].Style.BackColor = Color.Gray;
+                }
+                count++;
+            }
+
+            return count;
         }
 
         public static DataTable CreateDataTable<T>(IEnumerable<T> list)
