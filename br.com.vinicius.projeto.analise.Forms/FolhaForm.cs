@@ -199,32 +199,44 @@ namespace br.com.vinicius.projeto.analise.Forms
             {
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    pdfTable.AddCell(cell.Value?.ToString());
-                }
-            }
-            foreach (var item in pdfTable.Rows)
-            {
-                var count = 0;
-                foreach (var cell in item.GetCells())
-                {
-                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    PdfPCell txt = new PdfPCell(new Phrase(cell.Value?.ToString()));
+                    if (cell.Style.BackColor.Name.Equals("Gray"))
                     {
-                        var countGrid = 0;
-                        foreach (DataGridViewCell cellGrid in row.Cells)
-                        {
-                            if (cellGrid.Style.BackColor.Name.Equals("Gray"))
-                            {
-                                if (count == countGrid)
-                                {
-                                    cell.BackgroundColor = new iTextSharp.text.BaseColor(20, 120, 120);
-                                }
-                            }
-                            countGrid++;
-                        }
+                        txt.BackgroundColor = BaseColor.GRAY;
                     }
-                        count++;
+                    else
+                    {
+                        txt.BackgroundColor = BaseColor.WHITE;
+                    }
+                    pdfTable.AddCell(txt);
                 }
             }
+            //foreach (var item in pdfTable.Rows)
+            //{
+            //    var count = 0;
+            //    foreach (var cell in item.GetCells())
+            //    {
+            //        var countGrid = 0;
+            //        foreach (DataGridViewRow row in dataGridView1.Rows)
+            //        {
+            //            foreach (DataGridViewCell cellGrid in row.Cells)
+            //            {
+            //                var xxx = cell.Table.;
+            //                var type = cellGrid.Value?.ToString();
+            //                if (cellGrid.Style.BackColor.Name.Equals("Gray"))
+            //                {
+            //                    if (count == countGrid)
+            //                    {
+            //                        cell.BackgroundColor = BaseColor.GRAY;
+            //                    }
+
+            //                }
+            //                countGrid++;
+            //            }
+            //        }
+            //        count++;
+            //    }
+            //}
 
             //Exporting to PDF
             string folderPath = "C:\\PDFs\\";
